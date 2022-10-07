@@ -1,4 +1,4 @@
-package java.stacks;
+package project2.stacks;
 
 public final class ResizableArrayStack<T> implements StackInterface<T>
 {

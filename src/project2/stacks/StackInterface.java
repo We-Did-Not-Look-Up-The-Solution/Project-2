@@ -1,4 +1,4 @@
-package java.stacks;
+package project2.stacks;
 
 /**
 An interface for the ADT stack.

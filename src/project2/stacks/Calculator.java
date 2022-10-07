@@ -1,4 +1,4 @@
-package java.stacks;
+package project2.stacks;
 
 /**
  * A class that implements stacks to answer the postfix and infix
