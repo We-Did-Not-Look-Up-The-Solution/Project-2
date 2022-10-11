@@ -15,36 +15,36 @@ public final class LinkedStack<T> implements StackInterface<T>
       topNode = null;
    } // end default constructor
   
-//  < Implementations of the stack operations go here. >
-//  . . .
-   
-   public void clear() {};
+   public void clear() {
+	   topNode = null;
+   };
    
    @Override
    public boolean isEmpty() {
-	   // TODO Auto-generated method stub
-	   return false;
+	   return topNode == null;
    }
    
    @Override
    public T peek() {
-	   // TODO Auto-generated method stub
-	   return null;
-   }
+	   if (isEmpty())
+		   throw new EmptyStackException();
+	   else
+		   return topNode.getData();
+   } // end Peek
    
    @Override
    public T pop() {
-	   // TODO Auto-generated method stub
-	   return null;
+	   T top = peek(); // Might throw EmptyStackException
+	   // Assertion: topNode != null
+	   topNode = topNode.getNextNode();
+	   return top;
    }
    
    @Override
    public void push(T newEntry) {
-	   // TODO Auto-generated method stub
-   }
+	   topNode = new Node(newEntry, topNode);
+   } // End Push
    
-   // End Methods for LinkedStack
-
 	private class Node
 	{
       private T    data; // Entry in stack
@@ -81,4 +81,5 @@ public final class LinkedStack<T> implements StackInterface<T>
          next = nextNode;
       } // end setNextNode
 	} // end Node
+	
 } // end LinkedStack

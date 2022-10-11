@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test every method that was written by us, not the ones provided in the SourceCode.zip
+ * @author wwwyv
+ *
+ */
 class LinkedStackTest {
 
 	@Test
