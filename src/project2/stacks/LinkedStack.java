@@ -42,7 +42,10 @@ public final class LinkedStack<T> implements StackInterface<T>
    
    @Override
    public void push(T newEntry) {
-	   topNode = new Node(newEntry, topNode);
+	   Node newNode = new Node(newEntry, topNode);
+	   //newNode.next = topNode;
+	   this.topNode = newNode;
+	   //System.out.println("added " + newEntry.toString());
    } // End Push
    
 	private class Node
