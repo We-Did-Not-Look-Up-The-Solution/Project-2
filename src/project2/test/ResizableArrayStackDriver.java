@@ -12,15 +12,13 @@ import project2.stacks.*;
 public class ResizableArrayStackDriver {
     public static void main(String[] args) {
         // creating the ResizableArrayStack with the postfix expression
-        String postFixExpression = "ed*acb/a*-";
+        String postFixExpression = "ab*ca-/de*+";
         char[] postFixArr = postFixExpression.toCharArray();
         ResizableArrayStack<Character> RAS = new ResizableArrayStack<Character>();
-        for (char ch : postFixArr) {
-            RAS.push(ch);
-        }
+        for (int index = postFixArr.length - 1; index > -1; index--)
+        	RAS.push(postFixArr[index]);
 
         System.out.println("Postfix Expression: " + postFixExpression);
         System.out.println("Postfix Evaluation: " + Calculator.evaluatePostfix(RAS));
     }
-
 }
