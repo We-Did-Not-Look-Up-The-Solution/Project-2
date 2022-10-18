@@ -1,10 +1,11 @@
 package project2.test.unit_testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.security.InvalidParameterException;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
@@ -12,6 +13,8 @@ import org.junit.function.ThrowingRunnable;
 import org.junit.jupiter.api.Test;
 
 import project2.stacks.Calculator;
+import project2.stacks.LinkedStack;
+import project2.stacks.ResizableArrayStack;
 
 public class CalculatorTest {
 
@@ -41,48 +44,136 @@ public class CalculatorTest {
 		
 	@Test
 	 void testConvertToPostfix() {
-		// single operand expressions (a+b, c/d, etc.), 
-		// an empty expression 
+		// single operand expressions (a+b, c/d, etc.)
+		LinkedStack<Character> inFixStack = new LinkedStack<Character>();
+		String infixExpression = "a+b*c"; // hardcode
+		String postfixExpression = "";
+		char[] infixExpressArray = infixExpression.toCharArray();
+		
+		// Fill it backwards to read left to right
+		for (int index = infixExpressArray.length - 1; index > -1; index--) {
+			inFixStack.push(infixExpressArray[index]);
+		}
+		
+		assertEquals("abc*+", Calculator.convertToPostFix(inFixStack), "Infix Test");
+		
+		// test when filled the wring way (as if right to left)
+		for (int index = 0; index > infixExpressArray.length - 1; index++) {
+			inFixStack.push(infixExpressArray[index]);
+		}
+		assertNotEquals("abc*+", Calculator.convertToPostFix(inFixStack), "Infix Test");
+		
+		// an empty expression
+		assertEquals("", Calculator.convertToPostFix(new LinkedStack<Character>()), "Infix Test for Empty stacks");
+		
 		// really long expression
+		infixExpression = "(a+b+c+d+e) * (e/d ^ c)";
+		infixExpressArray = infixExpression.toCharArray();
+		for (int index = infixExpressArray.length - 1; index > -1; index--) {
+			inFixStack.push(infixExpressArray[index]);
+		}
 		
-		// Can it handle all letters?
-		
-		// Test an invalid infix expression
-		
-		// test operator with same precedence back to back
+		assertEquals("ab+c+d+e+edc^/*", Calculator.convertToPostFix(inFixStack), "Infix Test");
 		
 		// test incomplete expression with unclosed parenthesis (or '{' '[' ...)
+		infixExpression = "(a+b*c";
+		infixExpressArray = infixExpression.toCharArray();
+		for (int index = infixExpressArray.length - 1; index > -1; index--) {
+			inFixStack.push(infixExpressArray[index]);
+		}
+		assertNotEquals("abc*+", Calculator.convertToPostFix(inFixStack), "Infix Test for unclosed parens");
+		
 		
 		// expression entirely made up of operators
+		infixExpression = "++--//**";
+		infixExpressArray = infixExpression.toCharArray();
+		for (int index = infixExpressArray.length - 1; index > -1; index--) {
+			inFixStack.push(infixExpressArray[index]);
+		}
+		assertEquals("++-//**-", Calculator.convertToPostFix(inFixStack), "Infix Test with just operators");
 		
 		// expression with modulo
+		infixExpression = "d%b";
+		infixExpressArray = infixExpression.toCharArray();
+		for (int index = infixExpressArray.length - 1; index > -1; index--) {
+			inFixStack.push(infixExpressArray[index]);
+		}
+		assertEquals("db", Calculator.convertToPostFix(inFixStack), "Infix Test with invalid operator");
 	 }
 	
 	@Test
 	void testGetPrecedenceOf() {
 		// test any operators not defined
+		assertEquals(Calculator.getPrecedenceOf('%'), -1);
 		
 		// test same operator in a row
+		assertEquals(Calculator.getPrecedenceOf('+'), 3);
+		assertEquals(Calculator.getPrecedenceOf('-'), 3);
 		
+		assertEquals(Calculator.getPrecedenceOf('*'), 4);
+		assertEquals(Calculator.getPrecedenceOf('/'), 4);
+		
+		assertEquals(Calculator.getPrecedenceOf('^'), 5);
 	}
 	
 	@Test
 	void testEvaluatePostfix() {
+		HashMap<Character, Integer> varMap = new HashMap<Character, Integer>(26);
+		varMap.put('a', 5);
+		varMap.put('b', 4);
+		varMap.put('c', 3);
+		varMap.put('d', 4);
+		varMap.put('e', 1);
 		// test with invalid postfix
+		String correctPostfix = "ab*ca-/de*+";
+		String postFix = "a*b/(c-a)+d*e";
 		
-		// test with really long postfix
+		char[] correctPF = correctPostfix.toCharArray();
+		char[] wrongPF = postFix.toCharArray();
 		
+		ResizableArrayStack<Character> correctRASStack = new ResizableArrayStack<Character>();
+		ResizableArrayStack<Character> wrongRASStack = new ResizableArrayStack<Character>();
+		
+		for (int index = correctPF.length - 1; index > -1; index--) {
+			correctRASStack.push(correctPF[index]);
+		}
+		
+		for (int index = wrongPF.length - 1; index > -1; index--) {
+			wrongRASStack.push(wrongPF[index]);
+		}
 		// test with a map
+		assertEquals(Calculator.evaluatePostfix(correctRASStack, varMap), 20);
+		
+		// refill the correct stack to try without the map
+		for (int index = correctPF.length - 1; index > -1; index--) {
+			correctRASStack.push(correctPF[index]);
+		}
+		assertEquals(Calculator.evaluatePostfix(correctRASStack), 33);
+		
+		ThrowingRunnable badStack = new ThrowingRunnable() {
+			
+			@Override
+			public void run() throws Throwable {
+				assertNotEquals(Calculator.evaluatePostfix(wrongRASStack), 33);
+			}
+		};
+		
+		assertThrows(EmptyStackException.class, badStack);
+		
 		
 	}
 	
 	@Test
 	void testPerfromOperation() {
 		// test with invalid operation
+		assertNotEquals(Calculator.perfromOperation('%', 5, 2), (5%2));
+		assertEquals(Calculator.perfromOperation('%', 2, 3), 0);
 		
 		// test with really big integers
+		assertEquals(Calculator.perfromOperation('+', Integer.MAX_VALUE, Integer.MAX_VALUE), -2);
 		
 		// test with really small integers
+		assertEquals(Calculator.perfromOperation('-', Integer.MIN_VALUE, Integer.MIN_VALUE), 0);
 		
 	}
 	

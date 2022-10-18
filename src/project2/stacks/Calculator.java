@@ -25,9 +25,6 @@ public class Calculator {
 		while (!infixCopy.isEmpty()) { // while infix has chars to parse
 			char nextCharacter = infixCopy.pop(); // next nonblank char of infix
 			switch (nextCharacter) {
-			case 'a': case 'b': case 'c':
-				postFix += nextCharacter;
-				break;
 			case '^':
 				operatorStack.push(nextCharacter);
 				break;
@@ -52,9 +49,6 @@ public class Calculator {
 				
 				if (Character.isLetter(nextCharacter))
 					postFix += nextCharacter;
-				if (Character.isDigit(nextCharacter))
-					postFix += nextCharacter;
-				
 				break;
 			}
 		}
@@ -75,7 +69,7 @@ public class Calculator {
 		case '-': case '+':
 			return 3;
 		default:
-			throw new InputMismatchException();
+			return -1;
 			
 		}
 	}
