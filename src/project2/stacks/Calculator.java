@@ -12,11 +12,16 @@ import java.util.Scanner;
  *
  */
 public class Calculator {
-	public static Map<Character, Integer> variableMap;
+	
+	/** Default constructor*/
+	public Calculator() {
+		// Default constructor
+	}
 
 	/**
 	 * Converts an infix expression to an equivalent postfix expression.
-	 * @param infix
+	 * @param infix the infix expression in a LinkedStack
+	 * @return postfix
 	 */
 	public static String convertToPostFix(LinkedStack<Character> infix) {
 		StackInterface<Character> operatorStack = new LinkedStack<Character>();
@@ -60,6 +65,11 @@ public class Calculator {
 		return postFix;
 	}
 	
+	/**
+	 * Gets the precedence of an operator
+	 * @param unaryOperator the operator to check
+	 * @return the value of the operator
+	 */
 	public static int getPrecedenceOf(char unaryOperator) {
 		switch (unaryOperator) {
 		case '^':
@@ -75,9 +85,9 @@ public class Calculator {
 	}
 	
 	/**
-	 * Evaluates a postfix expression
-	 * @param postfix
-	 * @return
+	 * Evaluates a postfix expression using hardcoded variable values
+	 * @param postfix the postfix in a ResizableArrayStack
+	 * @return the value of the expression
 	 */
 	public static int evaluatePostfix(ResizableArrayStack<Character> postfix) {
 		ResizableArrayStack<Integer> valueStack = new ResizableArrayStack<Integer>();
@@ -104,9 +114,10 @@ public class Calculator {
 	}
 	
 	/**
-	 * Evaluates a postfix expression
-	 * @param postfix
-	 * @return
+	 * Evaluates a postfix expression using a map with variables defined
+	 * @param postfix the expression in a ResizableArrayStack
+	 * @param userVariableMap the map of variables to use
+	 * @return the value of the expression
 	 */
 	public static int evaluatePostfix(ResizableArrayStack<Character> postfix, Map<Character, Integer> userVariableMap) {
 		ResizableArrayStack<Integer> valueStack = new ResizableArrayStack<Integer>();
@@ -134,8 +145,8 @@ public class Calculator {
 	
 	/**
 	 * get the int value of a char, with preassigned values for those characters
-	 * @param opperandChar
-	 * @return
+	 * @param opperandChar the character representing a variable
+	 * @return the value of the variable
 	 */
 	public static int getValueOf(char opperandChar) {
 		switch(opperandChar) {
@@ -163,9 +174,9 @@ public class Calculator {
 	/**
 	 * Returns the value of the passed variable from the passed map.
 	 * Requires the map to have an entry for the char and non empty!
-	 * @param valueMap
-	 * @param opperandChar
-	 * @return
+	 * @param valueMap The map of values
+	 * @param opperandChar The character that represents the variable
+	 * @return the value of the variable
 	 */
 	public static int getValueOf(Map<Character, Integer> valueMap, char opperandChar) {
 		if (valueMap.get(opperandChar) == null) {
@@ -178,10 +189,10 @@ public class Calculator {
 	
 	/**
 	 * Perform the opperation of the passed char to the opperands
-	 * @param opperationChar
-	 * @param opperandOne
-	 * @param opperandTwo
-	 * @return
+	 * @param opperationChar the char representing the operation
+	 * @param opperandOne the first char to use (left of opperand)
+	 * @param opperandTwo the second char to use (right of opperand)
+	 * @return value of opperation. If operation is invalid, will return 0.
 	 */
 	public static int perfromOperation(char opperationChar, int opperandOne, int opperandTwo) {
 		switch(opperationChar) {

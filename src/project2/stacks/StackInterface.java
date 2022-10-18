@@ -1,5 +1,7 @@
 package project2.stacks;
 
+import java.util.EmptyStackException;
+
 /**
 An interface for the ADT stack.
 @author Frank M. Carrano
@@ -15,7 +17,7 @@ public void push(T newEntry);
 /** Removes and returns this stack's top entry.
     @return  The object at the top of the stack. 
     @throws  EmptyStackException if the stack is empty before the operation. */
-public T pop();
+public T pop() throws EmptyStackException;
 
 /** Retrieves this stack's top entry.
     @return  The object at the top of the stack.

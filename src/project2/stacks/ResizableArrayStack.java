@@ -3,6 +3,12 @@ package project2.stacks;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
+/**
+ * A stack implementation with resizable arrays
+ * @author wwwyv
+ *
+ * @param <T> Generic type object
+ */
 public final class ResizableArrayStack<T> implements StackInterface<T>
 {
 	private T[] stack;    // Array of stack entries
@@ -21,7 +27,7 @@ public final class ResizableArrayStack<T> implements StackInterface<T>
   
    /**
     * Make a ArrayStack with a desired capacity
-    * @param initialCapacity
+    * @param initialCapacity desired capacity to make this array stack with
     */
    public ResizableArrayStack(int initialCapacity)
    {

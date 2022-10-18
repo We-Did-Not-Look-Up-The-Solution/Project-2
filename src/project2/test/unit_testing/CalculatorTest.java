@@ -16,6 +16,11 @@ import project2.stacks.Calculator;
 import project2.stacks.LinkedStack;
 import project2.stacks.ResizableArrayStack;
 
+/**
+ * Unit testing for the Calculator.class methods
+ * @author wwwyv
+ *
+ */
 public class CalculatorTest {
 
 	// Tests should only be made to code made by us
@@ -41,7 +46,10 @@ public class CalculatorTest {
 		 * 
 		 * Example of corner case: cases testing multiple extreme values, but still within the vaild input
 		 */
-		
+	
+	/**
+	 * Test converToPostfix with and without a map
+	 */
 	@Test
 	 void testConvertToPostfix() {
 		// single operand expressions (a+b, c/d, etc.)
@@ -101,6 +109,10 @@ public class CalculatorTest {
 		assertEquals("db", Calculator.convertToPostFix(inFixStack), "Infix Test with invalid operator");
 	 }
 	
+	
+	/**
+	 * Test getPrecedenceOf(char operator)
+	 */
 	@Test
 	void testGetPrecedenceOf() {
 		// test any operators not defined
@@ -116,6 +128,10 @@ public class CalculatorTest {
 		assertEquals(Calculator.getPrecedenceOf('^'), 5);
 	}
 	
+	
+	/**
+	 * Test evaluatePostFix, with and without a map
+	 */
 	@Test
 	void testEvaluatePostfix() {
 		HashMap<Character, Integer> varMap = new HashMap<Character, Integer>(26);
@@ -163,6 +179,9 @@ public class CalculatorTest {
 		
 	}
 	
+	/**
+	 * Test perfromOperation(operator, opperand, opperand)
+	 */
 	@Test
 	void testPerfromOperation() {
 		// test with invalid operation
@@ -177,6 +196,9 @@ public class CalculatorTest {
 		
 	}
 	
+	/**
+	 * Test getValueOf() with or without a map
+	 */
 	@Test
 	void testGetValueOf() {
 		HashMap<Character, Integer> varMap = new HashMap<Character, Integer>(26);

@@ -10,6 +10,11 @@ import project2.stacks.*;
  *
  */
 public class ResizableArrayStackDriver {
+	
+	/**
+	 * Test a ResizableArrayStack
+	 * @param args arguments
+	 */
     public static void main(String[] args) {
         // creating the ResizableArrayStack with the postfix expression
         String postFixExpression = "ab*ca-/de*+";

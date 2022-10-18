@@ -15,6 +15,9 @@ import project2.stacks.ResizableArrayStack;
  */
 class ResizableArrayTest {
 
+	/**
+	 * Test the clear() method
+	 */
 	@Test
 	void test() {
 		// test the clear method, to see if it actually clears the stack

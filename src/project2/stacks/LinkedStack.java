@@ -10,6 +10,7 @@ public final class LinkedStack<T> implements StackInterface<T>
 {
 	private Node topNode; // References the first node in the chain
   
+	/** Default Constructor */
    public LinkedStack()
    {
       topNode = null;

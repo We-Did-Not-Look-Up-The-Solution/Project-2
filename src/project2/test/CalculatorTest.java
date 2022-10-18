@@ -17,7 +17,7 @@ public class CalculatorTest {
 
 	/**
 	 * Test Calculator with an infix expression given by user, then asking if user wants to define variables before evaluating, then evaluate
-	 * @param args
+	 * @param args arguments
 	 */
 	public static void main(String[] args) {
 		LinkedStack<Character> inFixStack = new LinkedStack<Character>();

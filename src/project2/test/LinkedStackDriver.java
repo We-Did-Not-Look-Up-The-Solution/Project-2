@@ -10,6 +10,10 @@ import project2.stacks.*;
  */
 public class LinkedStackDriver {
 
+	/**
+	 * Tests a LinkedStack instance
+	 * @param args arguments
+	 */
     public static void main(String[] args) {
         // creating the LinkedStack with the infix expression
         String infixExpression = "a*b/(c-a)+d*e";
