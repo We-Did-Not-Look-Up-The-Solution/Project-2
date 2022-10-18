@@ -6,7 +6,7 @@ Miguel Geronimo | miguelguzman@cpp.edu
 Richard Pacheco | 
 Jeff Vazquez    |
 
-Link to Video:
+Link to Video: https://youtu.be/8wtfC3jH9ak
 
 Link to JavaDoc (Hosted on CPP OneDrive):
 https://livecsupomona-my.sharepoint.com/:f:/g/personal/miguelguzman_cpp_edu/Eu9QmHBMw_VPptVxk26DxscBUwF2nYiXR8EtMhPbggrs1g
