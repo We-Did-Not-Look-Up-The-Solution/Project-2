@@ -1,6 +1,6 @@
 package project2.test.unit_testing;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,5 +15,5 @@ class LinkedStackTest {
 	void test() {
 		fail("Not yet implemented");
 	}
-
+	
 }

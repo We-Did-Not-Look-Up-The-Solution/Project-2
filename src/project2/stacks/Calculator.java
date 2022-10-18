@@ -1,6 +1,8 @@
 package project2.stacks;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -73,7 +75,7 @@ public class Calculator {
 		case '-': case '+':
 			return 3;
 		default:
-			return -1;
+			throw new InputMismatchException();
 			
 		}
 	}
@@ -154,6 +156,12 @@ public class Calculator {
 		case 'e':
 			return 6;
 		default:
+			if (!Character.isLetter(opperandChar)) { // Only gets values of letter variables
+				if (Character.isUpperCase(opperandChar))
+					System.err.println("Expected " + opperandChar + " to be a lowercase letter");
+				else
+					throw new InvalidParameterException("A variable was not a lowercase letter when attempting to get its value");
+			}
 			return 0;
 		}
 	}
@@ -167,10 +175,10 @@ public class Calculator {
 	 */
 	public static int getValueOf(Map<Character, Integer> valueMap, char opperandChar) {
 		if (valueMap.get(opperandChar) == null) {
-			System.out.println("The variable '" + opperandChar + "' does not have a value. Using 0.");
-			return 0;
+			throw new InputMismatchException("User defined values did not contain a definition for (or was null): " + opperandChar);
 		} else {
 			return valueMap.get(opperandChar);
+				
 		}
 	}
 	
@@ -203,106 +211,4 @@ public class Calculator {
 			return 0;
 		}
 	}
-	
-	/**
-	 * Test conversion with hardcorded vars. Needs to input infix backwards, else results are incorrect
-	 * @param args
-	 
-	public static void main(String[] args) {
-		LinkedStack<Character> inFixStack = new LinkedStack<Character>();
-		ResizableArrayStack<Character> postFixStack = new ResizableArrayStack<Character>();
-		Scanner scnr = new Scanner(System.in);
-		String infixExpression = "a+b*c"; // hardcode
-		System.out.println("Please type in your infix expression (Can have spaces): ");
-		if (scnr.hasNext()) infixExpression = scnr.next();
-		System.err.println("Variable values are hardcoded, please make sure they are correct (otherwise, they are 0)");
-		String postfixExpression = "";
-		char[] infixExpressArray = infixExpression.toCharArray();
-		
-		for (int index = infixExpressArray.length - 1; index > -1; index--) {
-			inFixStack.push(infixExpressArray[index]);
-		}
-		
-		postfixExpression = convertToPostFix(inFixStack);
-		System.out.println("The postFix form infix: " + postfixExpression);
-		
-		char[] postfixExpressArray = postfixExpression.toCharArray();
-		for (int index = postfixExpressArray.length - 1; index > -1; index--) {
-			postFixStack.push(postfixExpressArray[index]);
-		}
-		System.out.println("The result of evaluating the postFix: " + evaluatePostfix(postFixStack));
-		scnr.close();
-	}*/
-	
-	/**
-	 * Test Calculator with an infix expression given by user, then asking if user wants to define variables before evaluating, then evaluate
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		LinkedStack<Character> inFixStack = new LinkedStack<Character>();
-		ResizableArrayStack<Character> postFixStack = new ResizableArrayStack<Character>();
-		Scanner scnr = new Scanner(System.in);
-		String infixExpression = "a+b*c"; // hardcode
-		String alphabet = "abcdefghijklmnopqrstuvwxyz";
-		char alphaArray[] = alphabet.toCharArray();
-		String showVarValues = "";
-		boolean provideValues = false;
-		
-		// Gather input
-		System.out.println("Please type in your infix expression (Can have spaces): ");
-		if (scnr.hasNext()) infixExpression = scnr.next();
-		System.err.println("Variable values are hardcoded, please make sure they are correct (otherwise, they are 0)");
-		
-		String postfixExpression = "";
-		char[] infixExpressArray = infixExpression.toCharArray();
-		
-		for (int index = infixExpressArray.length - 1; index > -1; index--) {
-			inFixStack.push(infixExpressArray[index]);
-		}
-		
-		postfixExpression = convertToPostFix(inFixStack);
-		System.out.println("The postFix form infix: " + postfixExpression);
-		
-		char[] postfixExpressArray = postfixExpression.toCharArray();
-		for (int index = postfixExpressArray.length - 1; index > -1; index--) {
-			postFixStack.push(postfixExpressArray[index]);
-		}
-		// show current var values
-		System.out.println("These are the variable values that will be used for evaluation:");
-		for (int i = 0; i + 1 < alphaArray.length - 1; i += 2) {
-			System.out.println(alphaArray[i] + " = " + getValueOf(alphaArray[i]) + "	" + alphaArray[i + 1] + " = " + getValueOf(alphaArray[i + 1]));
-		}
-		
-		System.out.println("Do you want to specify variable values? Y/N: ");
-		if (scnr.hasNext()) showVarValues = scnr.next();
-		provideValues = showVarValues.contains("Y") || showVarValues.contains("y") ? true : false;
-		
-		if (provideValues) {
-			String userInputForMap = "";
-			boolean isUserDone = false;
-			Map<Character, Integer> userValues = new HashMap<Character, Integer>(26);
-			System.out.println("Type \"Done\" when you are prompted for a letter to indicate you are done.");
-			while (!isUserDone) {
-				int varValue = 0;
-				char varKey = '?';
-				System.out.println("Please type the variable identifier (one letter): ");
-				userInputForMap = scnr.next();
-				if (userInputForMap.equals("Done") || userInputForMap.equals("done")) {
-					 isUserDone = true;
-				} else {
-					varKey = userInputForMap.charAt(0);
-					System.out.println("Please enter the value for \"" + varKey + "\":");
-					varValue = scnr.nextInt();
-					userValues.put(varKey, varValue);
-				}
-				
-			}
-			System.out.println("The result of evaluating the postFix: " + evaluatePostfix(postFixStack, userValues));
-		} else {
-			System.out.println("The result of evaluating the postFix: " + evaluatePostfix(postFixStack));
-		}
-		
-		scnr.close();
-	}
-	
 }

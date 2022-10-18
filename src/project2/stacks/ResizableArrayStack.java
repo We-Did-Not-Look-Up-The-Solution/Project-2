@@ -120,13 +120,9 @@ public final class ResizableArrayStack<T> implements StackInterface<T>
 	 */
 	@Override
 	public void clear() {
-		for (Object stackEntry : stack) {
-			stackEntry = null;
-		}
-		/* Call pop repeatedly until empty
-		 * while (!isEmpty())
-		 *  	pop();
-		 */
+		while (!isEmpty())
+		  	pop();
+		 
 	}
 	
 } // end ArrayStack
